@@ -13,16 +13,30 @@ npm install --save react-signin-dynamodb
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
 
-import MyComponent from 'react-signin-dynamodb'
-import 'react-signin-dynamodb/dist/index.css'
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+import { SignIn } from 'react-signin-dynamodb'
+
+const App = () => {
+  return  (
+  
+    <SignIn  
+      imageUrl="https://superflows-images.s3.ap-south-1.amazonaws.com/superflows_black.png" 
+      imageAlt="This is a test image"
+      buttonCaption="Sign In"
+      awsRegion="aws_region"
+      awsSecret="aws_secret"
+      awsKey="aws_access_key"
+    />
+
+  )
 }
+
+export default App
+
+
 ```
 
 ## License
