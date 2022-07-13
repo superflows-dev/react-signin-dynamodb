@@ -11,8 +11,8 @@ const App = () => {
       imageAlt="This is a test image"
       buttonCaption="Sign In"
       awsRegion="ap-south-1"
-      awsSecret="FAneu8OQpDkZr1WqmE6pTap2WNHOpvRMgeKpMFWh"
-      awsKey="AKIASUWOWMZOTVNFRHEK"
+      awsSecret="aws_secret"
+      awsKey="aws_key"
     />
 
   )
