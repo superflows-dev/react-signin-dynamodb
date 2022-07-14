@@ -93,7 +93,7 @@ export const SignIn = (props) => {
           <VSpace />
           <LogoMast imageUrl={props.imageUrl} imageAlt={props.imageAlt} />
           <VSpace />
-          <InputEmail setValue={setEmail}/>
+          <InputEmail setValue={setEmail} onEnterPressed={() => {onClick()}}/>
           <AlertError caption={error}/>
           <VSpace />
           <ButtonNext caption={props.buttonCaption} disabled={email.length === 0} onClick={() => {onClick()}}/>

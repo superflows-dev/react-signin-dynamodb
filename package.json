@@ -1,6 +1,6 @@
 {
   "name": "react-signin-dynamodb",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A sign in component that uses dynamodb as the backend. ",
   "author": "superflows-dev",
   "license": "MIT",
@@ -51,12 +51,12 @@
     "dist"
   ],
   "dependencies": {
-    "aws-sdk": "^2.1173.0",
+    "aws-sdk": "^2.1175.0",
     "bootstrap": "^5.1.3",
     "react-bootstrap": "^2.4.0",
-    "react-dynamodb-helper": "^1.0.4",
-    "react-ses-helper": "^1.0.0",
-    "react-ui-components-superflows": "^1.0.4"
+    "react-dynamodb-helper": "^1.0.5",
+    "react-ses-helper": "^1.0.1",
+    "react-ui-components-superflows": "^1.0.6"
   },
   "keywords": [
     "react",
