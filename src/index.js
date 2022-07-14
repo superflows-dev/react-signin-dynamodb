@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState } from "react";
-import styles from './styles.module.css'
+import { Constants } from './constants';
 import { VSpace, InputEmail, LogoMast, AlertError, ButtonNext } from 'react-ui-components-superflows';
 import * as DynamoDB from  'react-dynamodb-helper';
+import * as SesHelper from 'react-ses-helper';
 
 import { Col, Row, Button, Container } from 'react-bootstrap';
 
@@ -11,20 +12,70 @@ export const SignIn = (props) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
 
+  function generateOTP() {
+
+    var digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < 4; i++ ) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
+
+  }
+
   const onClick = async ()  => {
         
-    var params = {
+    var paramsCredentials = {
         TableName: "Account_Credentials",
         Key : { 
             "email" : email,
         }
     };
 
-    console.log(props);
+    let resultCredentials = await DynamoDB.getData(props.awsRegion, props.awsSecret, props.awsKey, paramsCredentials)
+    if(resultCredentials.Item == null) {
 
-    let result = await DynamoDB.getData(props.awsRegion, props.awsSecret, props.awsKey, params)
-    if(result.Item == null) {
-        setError(Constants.ERROR_EMAIL_NOT_FOUND)
+      setError(Constants.ERROR_EMAIL_NOT_FOUND)
+      if(props.onSubmitResult != null) props.onSubmitResult(email, false);
+
+    } else {
+
+      var paramsProfiles = {
+        TableName: "Account_Profiles",
+        Key : { 
+          "userId" : resultCredentials.Item.userId,
+        }
+      };
+      let resultProfiles = await DynamoDB.getData(props.awsRegion, props.awsSecret, props.awsKey, paramsProfiles)
+      
+      console.log(resultProfiles);
+
+      if(resultProfiles.Item != null) {
+
+        const otp = generateOTP();
+
+        let paramsUpdateCredentials = {
+          TableName: "Account_Credentials",
+          Key:{
+              email: email
+          },
+          UpdateExpression: "set #otp = :otpVal",
+          ExpressionAttributeNames: {
+              "#otp": "otp",
+          },
+          ExpressionAttributeValues: {
+              ":otpVal": otp
+          }
+        }
+
+        await DynamoDB.updateData(props.awsRegion, props.awsSecret, props.awsKey, paramsUpdateCredentials)
+
+        SesHelper.sendTemplatedEmail(props.awsRegion, props.awsSecret, props.awsKey, props.emailerSource,[email], [], props.template, "{\"project\": \"" + props.project + "\", \"name\": \"" + resultProfiles.Item.firstName + "\", \"otp\": \"" + otp + "\"}", [])
+
+      }
+
+      if(props.onSubmitResult != null) props.onSubmitResult(email, true);
+      
     }
 
   }

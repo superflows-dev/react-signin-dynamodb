@@ -10,6 +10,22 @@
 npm install --save react-signin-dynamodb
 ```
 
+## Dependencies
+
+```bash
+npm install --save aws-sdk
+npm install --save bootstrap
+npm install --save react-bootstrap
+npm install --save react-dynamodb-helper
+npm install --save react-ses-helper
+npm install --save react-ui-components-superflows
+```
+
+## Note
+
+### AWS key pair needs to have DynamoDb privileges
+### For SES to work a template needs to be in place, for more information see the react-ses-helper npm
+
 ## Usage
 
 ```jsx
@@ -20,22 +36,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignIn } from 'react-signin-dynamodb'
 
 const App = () => {
+
+  function processAccount(email, exists) {
+    console.log(email, exists);
+  }
+
   return  (
   
     <SignIn  
-      imageUrl="https://superflows-images.s3.ap-south-1.amazonaws.com/superflows_black.png" 
+      imageUrl="https://****************.amazonaws.com/superflows_black.png" 
       imageAlt="This is a test image"
       buttonCaption="Sign In"
+      onSubmitResult={processAccount}
       awsRegion="aws_region"
       awsSecret="aws_secret"
-      awsKey="aws_access_key"
+      awsKey="aws_key"
+      template="TemplateOtp1"
+      project="SF-21"
+      emailerSource="super*********@**ail.com"
     />
 
   )
 }
 
 export default App
-
 
 ```
 
