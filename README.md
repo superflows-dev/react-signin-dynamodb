@@ -23,7 +23,7 @@ npm install --save react-ui-components-superflows
 
 ## Note
 
-### AWS key pair needs to have DynamoDb privileges
+### AWS key pair needs to have DynamoDb & SES privileges
 ### For SES to work a template needs to be in place, for more information see the react-ses-helper npm
 
 ## Usage
