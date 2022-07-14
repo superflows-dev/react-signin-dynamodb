@@ -57,5 +57,15 @@
     "react-dynamodb-helper": "^1.0.4",
     "react-ses-helper": "^1.0.0",
     "react-ui-components-superflows": "^1.0.4"
-  }
+  },
+  "keywords": [
+    "react",
+    "aws",
+    "dynamodb",
+    "ses",
+    "sign in",
+    "signin",
+    "login",
+    "account"
+  ]
 }
