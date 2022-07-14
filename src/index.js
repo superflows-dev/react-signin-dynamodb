@@ -53,18 +53,21 @@ export const SignIn = (props) => {
       if(resultProfiles.Item != null) {
 
         const otp = generateOTP();
+        const expiry = parseInt(new Date().getTime()/1000) + 24*60*60;
 
         let paramsUpdateCredentials = {
           TableName: "Account_Credentials",
           Key:{
               email: email
           },
-          UpdateExpression: "set #otp = :otpVal",
+          UpdateExpression: "set #otp = :otpVal, #expiry = :expiry",
           ExpressionAttributeNames: {
               "#otp": "otp",
+              "#expiry": "expiry",
           },
           ExpressionAttributeValues: {
-              ":otpVal": otp
+              ":otpVal": otp,
+              ":expiry": expiry
           }
         }
 
