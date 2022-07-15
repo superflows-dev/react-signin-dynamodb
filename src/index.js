@@ -42,42 +42,28 @@ export const SignIn = (props) => {
 
     } else {
 
-      var paramsProfiles = {
-        TableName: "Account_Profiles",
-        Key : { 
-          "userId" : resultCredentials.Item.userId,
+      const otp = generateOTP();
+      const expiry = parseInt(new Date().getTime()/1000) + 24*60*60;
+
+      let paramsUpdateCredentials = {
+        TableName: "Account_Credentials",
+        Key:{
+            email: email
+        },
+        UpdateExpression: "set #otp = :otpVal, #expiry = :expiry",
+        ExpressionAttributeNames: {
+            "#otp": "otp",
+            "#expiry": "expiry",
+        },
+        ExpressionAttributeValues: {
+            ":otpVal": otp,
+            ":expiry": expiry
         }
-      };
-      let resultProfiles = await DynamoDB.getData(props.awsRegion, props.awsSecret, props.awsKey, paramsProfiles)
-      
-      console.log(resultProfiles);
-
-      if(resultProfiles.Item != null) {
-
-        const otp = generateOTP();
-        const expiry = parseInt(new Date().getTime()/1000) + 24*60*60;
-
-        let paramsUpdateCredentials = {
-          TableName: "Account_Credentials",
-          Key:{
-              email: email
-          },
-          UpdateExpression: "set #otp = :otpVal, #expiry = :expiry",
-          ExpressionAttributeNames: {
-              "#otp": "otp",
-              "#expiry": "expiry",
-          },
-          ExpressionAttributeValues: {
-              ":otpVal": otp,
-              ":expiry": expiry
-          }
-        }
-
-        await DynamoDB.updateData(props.awsRegion, props.awsSecret, props.awsKey, paramsUpdateCredentials)
-
-        SesHelper.sendTemplatedEmail(props.awsRegion, props.awsSecret, props.awsKey, props.emailerSource,[email], [], props.template, "{\"project\": \"" + props.project + "\", \"name\": \"" + resultProfiles.Item.firstName + "\", \"otp\": \"" + otp + "\"}", [])
-
       }
+
+      await DynamoDB.updateData(props.awsRegion, props.awsSecret, props.awsKey, paramsUpdateCredentials)
+
+      SesHelper.sendTemplatedEmail(props.awsRegion, props.awsSecret, props.awsKey, props.emailerSource,[email], [], props.template, "{\"project\": \"" + props.project + "\", \"name\": \"" + resultCredentials.Item.firstName + "\", \"otp\": \"" + otp + "\"}", [])
 
       if(props.onSubmitResult != null) props.onSubmitResult(email, true);
       

@@ -1,6 +1,6 @@
 {
   "name": "react-signin-dynamodb",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A sign in component that uses dynamodb as the backend. ",
   "author": "superflows-dev",
   "license": "MIT",
