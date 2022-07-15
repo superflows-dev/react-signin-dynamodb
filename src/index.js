@@ -24,6 +24,8 @@ export const SignIn = (props) => {
   }
 
   const onClick = async ()  => {
+
+    setError("")
         
     var paramsCredentials = {
         TableName: "Account_Credentials",
@@ -93,7 +95,7 @@ export const SignIn = (props) => {
           <VSpace />
           <LogoMast imageUrl={props.imageUrl} imageAlt={props.imageAlt} />
           <VSpace />
-          <InputEmail setValue={setEmail} onEnterPressed={() => {onClick()}}/>
+          <InputEmail setValue={setEmail} autofocus={true} onEnterPressed={() => {onClick()}}/>
           <AlertError caption={error}/>
           <VSpace />
           <ButtonNext caption={props.buttonCaption} disabled={email.length === 0} onClick={() => {onClick()}}/>
