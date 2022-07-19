@@ -33,7 +33,7 @@ export const SignIn = (props) => {
             "email" : email,
         }
     };
-
+    
     let resultCredentials = await DynamoDB.getData(props.awsRegion, props.awsSecret, props.awsKey, paramsCredentials)
     if(resultCredentials.Item == null) {
 
