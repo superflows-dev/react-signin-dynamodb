@@ -82,9 +82,9 @@ export const SignIn = (props) => {
           <LogoMast imageUrl={props.imageUrl} imageAlt={props.imageAlt} />
           <VSpace />
           <InputEmail setValue={setEmail} autofocus={true} onEnterPressed={() => {onClick()}}/>
-          <AlertError caption={error}/>
+          <AlertError caption={error} custom={{backgroundColor: props.theme.dangerBackgroundColor, color: props.theme.dangerColor, borderColor: props.theme.dangerBorderColor}}/>
           <VSpace />
-          <ButtonNext caption={props.buttonCaption} disabled={email.length === 0} onClick={() => {onClick()}}/>
+          <ButtonNext caption={props.buttonCaption} disabled={email.length === 0} onClick={() => {onClick()}} custom={{backgroundColor:props.theme.primaryButtonBackgroundColor, color:props.theme.primaryButtonColor}}/>
 
         </Col>
       </Row>

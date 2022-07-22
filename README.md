@@ -69,6 +69,7 @@ AWS region, secret and access key form the credentials. These are required to us
 
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Themes from 'react-ui-themes-superflows';
 
 import { SignIn } from 'react-signin-dynamodb'
 
@@ -92,6 +93,7 @@ const App = () => {
       template: email template comfigured in aws ses
       project: name of the project
       emailerSource: source email configured to send emails in aws ses
+      theme: ui theme
 
     */
   
@@ -106,6 +108,7 @@ const App = () => {
       template="TemplateOtp1"
       project="SF-21"
       emailerSource="super*********@**ail.com"
+      theme={Themes.getTheme("Default")}
     />
 
   )
